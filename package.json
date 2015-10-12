@@ -1,0 +1,23 @@
+{
+  "name": "browser-version",
+  "version": "0.0.0",
+  "description": "Detect Web Browser version",
+  "main": "index.js",
+  "keywords": [
+    "Browser",
+    "Version"
+  ],
+  "homepage": "https://github.com/LightSpeedWorks/browser-version",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LightSpeedWorks/browser-version"
+  },
+  "bugs": {
+    "url": "https://github.com/LightSpeedWorks/browser-version/issues"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "LightSpeedC",
+  "license": "MIT"
+}
