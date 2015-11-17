@@ -1,33 +1,33 @@
 <!DOCTYPE html>
 <script>
-  var stepNext = function () {
-    var steps = [{name: 'init', ms: Date.now()}];
-    var maxLen = 4;
-    var spaces = '                                        ';
-    // stepNext
-    function stepNext(stepName) {
-      steps.push({name: stepName, ms: Date.now()});
-      if (maxLen < stepName.length)
-        maxLen = stepName.length;
-      if (stepName === 'end') stepNext.end();
-    } // stepNext
-    stepNext.end = function end() {
-      var str = ''; //'<pre>';
-      for (var i = 0, n = steps.length - 1; i < n; ++i) {
-        str += pad(i, 2) + ': ' + pad(steps[i].name, -maxLen) + ' : ' +
-               pad(steps[i + 1].ms - steps[i].ms, 5) + ' ms\n';
-      }
-      str += '**: ' + pad('ALL', -maxLen) + ' : ' +
-             pad(steps[n].ms - steps[0].ms, 5) + ' ms\n';
-      var pre = document.createElement('pre');
-      pre.innerHTML = str;
-      document.body.appendChild(pre);
-      //document.write(str + '</pre>\n');
-    }; // end
-    return stepNext;
-    function pad(n, m) { if (m > 0) return (spaces + n).slice(-m); return (n + spaces).slice(0, -m); }
-  } ();
-  stepNext('start');
+	var stepNext = function () {
+		var steps = [{name: 'init', ms: Date.now()}];
+		var maxLen = 4;
+		var spaces = '                                        ';
+		// stepNext
+		function stepNext(stepName) {
+			steps.push({name: stepName, ms: Date.now()});
+			if (maxLen < stepName.length)
+				maxLen = stepName.length;
+			if (stepName === 'end') stepNext.end();
+		} // stepNext
+		stepNext.end = function end() {
+			var str = ''; //'<pre>';
+			for (var i = 0, n = steps.length - 1; i < n; ++i) {
+				str += pad(i, 2) + ': ' + pad(steps[i].name, -maxLen) + ' : ' +
+							 pad(steps[i + 1].ms - steps[i].ms, 5) + ' ms\n';
+			}
+			str += '**: ' + pad('ALL', -maxLen) + ' : ' +
+						 pad(steps[n].ms - steps[0].ms, 5) + ' ms\n';
+			var pre = document.createElement('pre');
+			pre.innerHTML = str;
+			document.body.appendChild(pre);
+			//document.write(str + '</pre>\n');
+		}; // end
+		return stepNext;
+		function pad(n, m) { if (m > 0) return (spaces + n).slice(-m); return (n + spaces).slice(0, -m); }
+	} ();
+	stepNext('start');
 </script>
 
 <script>stepNext('html head');</script>
@@ -51,99 +51,99 @@
 <script>stepNext('load write-object');</script>
 <!--<script src="write-object.js"></script>-->
 <script>
-  function writeObject(name, obj) {
-    var result = '';
-    for (var i in obj) {
-      if (i.slice(0, 1) === '_') continue;
-      var elem = obj[i];
-      if (typeof elem === 'boolean') continue;
-      if (elem === null) continue;
-      if (elem === undefined) continue;
-      if (elem === 1 || elem === 0) continue;
-      try {
-        var str = JSON.stringify(elem, null, '  ') + '';
-      } catch (e) {
-        continue; // var str = e + '';
-      }
-      if (str.length > 300) continue; // str = '...';
-      if (str !== 'undefined' && str !== 'null' &&
-          str !== '{}' && str !== '[]' && str !== '""' && str !== '"0"')
-        result += name + '.' + i + ' = ' + str + '\n';
-    }
-    return result;
-  }
+	function writeObject(name, obj) {
+		var result = '';
+		for (var i in obj) {
+			if (i.slice(0, 1) === '_') continue;
+			var elem = obj[i];
+			if (typeof elem === 'boolean') continue;
+			if (elem === null) continue;
+			if (elem === undefined) continue;
+			if (elem === 1 || elem === 0) continue;
+			try {
+				var str = JSON.stringify(elem, null, '  ') + '';
+			} catch (e) {
+				continue; // var str = e + '';
+			}
+			if (str.length > 300) continue; // str = '...';
+			if (str !== 'undefined' && str !== 'null' &&
+					str !== '{}' && str !== '[]' && str !== '""' && str !== '"0"')
+				result += name + '.' + i + ' = ' + str + '\n';
+		}
+		return result;
+	}
 </script>
 <script>stepNext('load get-browser');</script>
 <!--<script src="get-browser.js"></script>-->
 <script>
-  /**
-   * get browser name. ブラウザ名を取得
-   *
-   * @param userAgent (string) ユーザーエージェント
-   * @returns browser name (sring) ブラウザ名
-   *    (chrome, safari, opera, firefox, ie6, ie7, ie8, ie9, ie10, ie11, unknown)
-   */
-  function getBrowser(userAgent) {
-    var ua = userAgent.toLowerCase();
-    var name = 'unknown';
+	/**
+	 * get browser name. ブラウザ名を取得
+	 *
+	 * @param userAgent (string) ユーザーエージェント
+	 * @returns browser name (sring) ブラウザ名
+	 *    (chrome, safari, opera, firefox, ie6, ie7, ie8, ie9, ie10, ie11, unknown)
+	 */
+	function getBrowser(userAgent) {
+		var ua = userAgent.toLowerCase();
+		var name = 'unknown';
   
-    if (ua.indexOf('edge') != -1){
-      name = 'edge';
-    } else if (ua.indexOf('chrome') != -1){
-      name = 'chrome';
-    } else if (ua.indexOf('safari') != -1){
-      name = 'safari';
-    } else if (ua.indexOf('opera') != -1){
-      name = 'opera';
-    } else if (ua.indexOf('firefox') != -1){
-      name = 'firefox';
-    } else if (ua.indexOf('trident/7') != -1){
-      name = 'ie11';
-    } else if (ua.indexOf("msie") != -1){
-      if (ua.indexOf("msie 6.") != -1){
-        name = 'ie6';
-      } else if (ua.indexOf("msie 7.") != -1){
-        name = 'ie7';
-      } else if (ua.indexOf("msie 8.") != -1){
-        name = 'ie8';
-      } else if (ua.indexOf("msie 9.") != -1){
-        name = 'ie9';
-      } else if (ua.indexOf("msie 10.") != -1){
-        name = 'ie10';
-      } else {
-        name = 'ie';
-      }
-    }
-    return name;
-  } // getBrowser
+		if (ua.indexOf('edge') != -1){
+			name = 'edge';
+		} else if (ua.indexOf('chrome') != -1){
+			name = 'chrome';
+		} else if (ua.indexOf('safari') != -1){
+			name = 'safari';
+		} else if (ua.indexOf('opera') != -1){
+			name = 'opera';
+		} else if (ua.indexOf('firefox') != -1){
+			name = 'firefox';
+		} else if (ua.indexOf('trident/7') != -1){
+			name = 'ie11';
+		} else if (ua.indexOf("msie") != -1){
+			if (ua.indexOf("msie 6.") != -1){
+				name = 'ie6';
+			} else if (ua.indexOf("msie 7.") != -1){
+				name = 'ie7';
+			} else if (ua.indexOf("msie 8.") != -1){
+				name = 'ie8';
+			} else if (ua.indexOf("msie 9.") != -1){
+				name = 'ie9';
+			} else if (ua.indexOf("msie 10.") != -1){
+				name = 'ie10';
+			} else {
+				name = 'ie';
+			}
+		}
+		return name;
+	} // getBrowser
 </script>
 <script>stepNext('execute local script');</script>
 <script>
-  var obj = {
-    userAgent:   navigator.userAgent,   //ユーザエージェント
-    appVersion:  navigator.appVersion,  //バージョン
-    appName:     navigator.appName,     //名前
-    platform:    navigator.platform,    //プラットフォームのタイプ
-    appCodeName: navigator.appCodeName, //コード名
-  };
+	var obj = {
+		userAgent:   navigator.userAgent,   //ユーザエージェント
+		appVersion:  navigator.appVersion,  //バージョン
+		appName:     navigator.appName,     //名前
+		platform:    navigator.platform,    //プラットフォームのタイプ
+		appCodeName: navigator.appCodeName, //コード名
+	};
 
-  var result = 'getBrowser(navigator.userAgent) = ' + getBrowser(navigator.userAgent) + '\n\n' +
-    writeObject('navigator', obj) + '\n' +
-    writeObject('navigator', navigator);
+	var result = 'getBrowser(navigator.userAgent) = ' + getBrowser(navigator.userAgent) + '\n\n' +
+		writeObject('navigator', obj) + '\n' +
+		writeObject('navigator', navigator);
 
-  //document.getElementById('id'));
-  var pre = document.createElement('pre');
-  pre.innerHTML = result;
-  document.body.appendChild(pre);
-  // http://tokkono.cute.coocan.jp/blog/slow/index.php/xhtmlcss/jquery-alternative-tips/
-  // var p = document.createElement('p');
-  // var text = document.createTextNode('hello');
-  // p.appendChild(text);
-  // document.body.appendChild(p);
-  // http://uupaa.hatenablog.com/entry/2014/11/15/201538
+	//document.getElementById('id'));
+	var pre = document.createElement('pre');
+	pre.innerHTML = result;
+	document.body.appendChild(pre);
+	// http://tokkono.cute.coocan.jp/blog/slow/index.php/xhtmlcss/jquery-alternative-tips/
+	// var p = document.createElement('p');
+	// var text = document.createTextNode('hello');
+	// p.appendChild(text);
+	// document.body.appendChild(p);
+	// http://uupaa.hatenablog.com/entry/2014/11/15/201538
 
-  // http://qiita.com/Evolutor_web/items/162bfcf83695c83f1077
-  // http://www.webdesignleaves.com/wp/jquery/703/
+	// http://qiita.com/Evolutor_web/items/162bfcf83695c83f1077
+	// http://www.webdesignleaves.com/wp/jquery/703/
 
 </script>
 <script>stepNext('end');</script>
